@@ -1,5 +1,6 @@
 package net.nspika.game;
 
+import net.nspika.game.entities.Bullet;
 import net.nspika.game.entities.Player;
 import net.nspika.game.gfx.Display;
 import net.nspika.game.managers.KeyManager;
@@ -10,6 +11,7 @@ public class Handler {
 	public static Player player;
 	public static Display display;
 	public static KeyManager keyManager;
+	public static Bullet bullet;
 	
 	public Handler(Game game) {
 		Handler.game = game;
@@ -41,6 +43,10 @@ public class Handler {
 	
 	public static int getHeight() {
 		return Game.height;
+	}
+	
+	public static Bullet getBullet() {
+		return bullet;
 	}
 
 }

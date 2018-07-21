@@ -23,25 +23,18 @@ public class Background {
 		img1 = ImageLoader.loadImage("/Lel.png");
 		img2 = ImageLoader.loadImage("/Lel.png");
 		y2 = -Handler.getHeight();
+	}
+	
+	public void tick() {
+		y1 += 2;
+		y2 += 2;
 		
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask() {
-			
-			@Override
-			public void run() {
-				
-				y1 += 2;
-				y2 += 2;
-				
-				if(y1 >= Handler.getHeight()) {
-					y1 = 0;
-				}
-				if(y2 >= 0) {
-					y2 = 0 - Handler.getHeight();
-				}
-				
-			}
-		}, 50, 50);
+		if(y1 >= Handler.getHeight()) {
+			y1 = 0;
+		}
+		if(y2 >= 0) {
+			y2 = 0 - Handler.getHeight();
+		}
 	}
 	
 	

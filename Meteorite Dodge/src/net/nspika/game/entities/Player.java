@@ -31,7 +31,6 @@ public class Player {
 	
 	public void tick() {
 		move();
-		
 	}
 	
 	public void move() {
@@ -51,5 +50,23 @@ public class Player {
 		g.setColor(Color.RED);
 		g.fillRect((int) x, (int) y, width, height);
 		
+	}
+	
+	//GETTERS AND SETTERS
+	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 }

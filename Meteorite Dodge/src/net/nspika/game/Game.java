@@ -3,9 +3,10 @@ package net.nspika.game;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import net.nspika.game.entities.Player;
 import net.nspika.game.gfx.Display;
 import net.nspika.game.managers.KeyManager;
+import net.nspika.game.states.GameState;
+import net.nspika.game.states.State;
 import net.nspika.game.utils.Background;
 
 
@@ -21,9 +22,9 @@ public class Game implements Runnable{
     
     Display display;
     Handler handler;
-    Player player;
     KeyManager keyManager;
-    Background background;
+    State state;
+    GameState gameState;
     
     public Game(String title, int width, int height) {
     	Game.title = title;
@@ -36,8 +37,9 @@ public class Game implements Runnable{
     	keyManager = new KeyManager(handler);
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
-        background = new Background(handler);
-        player = new Player(handler);
+        
+        gameState = new GameState(handler);
+        State.setState(gameState);
     }
     
 	@Override
@@ -97,7 +99,8 @@ public class Game implements Runnable{
 	
 	public void tick() {
 		keyManager.tick();
-		player.tick();
+		State.getState().tick();
+		
 	}
 	
 	public void render() {
@@ -112,8 +115,7 @@ public class Game implements Runnable{
         g.clearRect(0, 0, width, height);
 
         // Draw area
-        background.render(g);
-        player.render(g);
+        State.getState().render(g);
         
         // show
         bs.show();

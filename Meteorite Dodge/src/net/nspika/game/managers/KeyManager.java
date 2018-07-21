@@ -8,7 +8,7 @@ import net.nspika.game.Handler;
 public class KeyManager implements KeyListener {
 
 	public boolean[] keys;
-	public static boolean up, down, left, right;
+	public static boolean up, down, left, right, space;
 	
 	private Handler handler;
 	
@@ -25,6 +25,8 @@ public class KeyManager implements KeyListener {
         left = keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT];
 
         right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
+        
+        space = keys[KeyEvent.VK_SPACE];
 
     }
 	
