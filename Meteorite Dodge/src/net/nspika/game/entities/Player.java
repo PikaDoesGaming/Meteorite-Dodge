@@ -15,7 +15,7 @@ public class Player {
 	
 	private float x, y;
 	private int width = 40, height = 30;
-	private float vx;
+	private float vx , vy;
 	private float ax;
 	public static int score = 0;
 	Handler handler;
@@ -27,6 +27,7 @@ public class Player {
 		x = Handler.getWidth() - (Handler.getWidth() + width) / 2 ;
 		y = Handler.getHeight() - Handler.getWidth() / 5;
 		vx = 8;
+		vy = 2;
 	}
 	
 	public void tick() {
@@ -39,11 +40,34 @@ public class Player {
 		if(KeyManager.left) {
 			x -= vx;
 		}
+		
 		if(KeyManager.right) {
 			x += vx;
 		}
-		//vx += ax;
-		//x += vx;
+		
+		if(KeyManager.up) {
+			y -= 2*vy;
+		}
+		
+		if(KeyManager.down) {
+			y += 3*vy;
+		}
+		
+		if(x + width > Handler.getWidth()) {
+			x += -vx;
+		}
+		
+		if(x < 0) {
+			x += vx;
+		}
+		
+		if(y + height > Handler.getHeight()) {
+			y += -3*vy;
+		}
+		
+		if(y < Handler.getWidth() - Handler.getWidth() / 5) {
+			y += 2*vy;
+		}
 	}
 	
 	public void render(Graphics g) {
