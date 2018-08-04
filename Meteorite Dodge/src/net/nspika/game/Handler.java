@@ -4,6 +4,7 @@ import net.nspika.game.entities.Bullet;
 import net.nspika.game.entities.Player;
 import net.nspika.game.gfx.Display;
 import net.nspika.game.managers.KeyManager;
+import net.nspika.game.managers.MouseManager;
 
 public class Handler {
 	
@@ -11,6 +12,7 @@ public class Handler {
 	public static Player player;
 	public static Display display;
 	public static KeyManager keyManager;
+	public static MouseManager mouseManager;
 	public static Bullet bullet;
 	
 	public Handler(Game game) {
@@ -47,6 +49,10 @@ public class Handler {
 	
 	public static Bullet getBullet() {
 		return bullet;
+	}
+	
+	public static MouseManager getMouseManager() {
+		return mouseManager;
 	}
 
 }

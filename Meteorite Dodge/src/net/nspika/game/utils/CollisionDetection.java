@@ -11,14 +11,15 @@ public class CollisionDetection {
 		int yB = (int) bullet.getY();
 		int widthB = bullet.getWidth();
 		int heightB = bullet.getHeight();
+		int deltaWidthB = bullet.getDeltaWidth();
 
 		int xM = (int) meteor.getX();
 		int yM = (int) meteor.getY();
 		int widthM = meteor.getWidth();
 		int heightM = meteor.getHeight();
-
-		if (yB < yM && xB > xM) {
-			return true;
+		
+		if (xB + widthB + deltaWidthB < xM || xB > xM + widthM || yB + heightB < yM || yB > yM + heightM) {
+			return false;
 		}
 
 		return true;

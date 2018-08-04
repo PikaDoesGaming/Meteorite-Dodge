@@ -28,7 +28,7 @@ public class Meteorite {
 
 	public void render(Graphics g) {
 		
-		g.setColor(Color.GRAY);
+		g.setColor(Color.ORANGE);
 		g.fillRect(((int) x), ((int) y), width, height);
 		
 	}

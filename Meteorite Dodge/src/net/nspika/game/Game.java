@@ -5,6 +5,7 @@ import java.awt.image.BufferStrategy;
 
 import net.nspika.game.gfx.Display;
 import net.nspika.game.managers.KeyManager;
+import net.nspika.game.managers.MouseManager;
 import net.nspika.game.states.GameState;
 import net.nspika.game.states.State;
 import net.nspika.game.utils.Background;
@@ -20,11 +21,11 @@ public class Game implements Runnable{
     private boolean running;
     private int tickCount = 0;
     
-    Display display;
-    Handler handler;
-    KeyManager keyManager;
-    State state;
-    GameState gameState;
+    private Display display;
+    private Handler handler;
+    private KeyManager keyManager;
+    private GameState gameState;
+    private MouseManager mouseManager;
     
     public Game(String title, int width, int height) {
     	Game.title = title;
@@ -37,6 +38,8 @@ public class Game implements Runnable{
     	keyManager = new KeyManager(handler);
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
         
         gameState = new GameState(handler);
         State.setState(gameState);
