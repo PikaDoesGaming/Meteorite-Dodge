@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import net.nspika.game.Handler;
 import net.nspika.game.managers.KeyManager;
-import net.nspika.game.managers.MouseManager;
 import net.nspika.game.utils.Background;
 import net.nspika.game.utils.Button;
 import net.nspika.game.utils.Fonts;
