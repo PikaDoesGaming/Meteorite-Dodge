@@ -1,9 +1,12 @@
 package net.nspika.game.utils;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.ImageIcon;
 
 import net.nspika.game.Handler;
 
@@ -16,13 +19,16 @@ public class Background {
 	
 	private BufferedImage img1, img2;
 	
+	private Image image;
+	
 	public Background(Handler handler) {
 		this.handler = handler;
 		width = Handler.getWidth();
 		height1 = Handler.getHeight();
-		img1 = ImageLoader.loadImage("/Lel.png");
-		img2 = ImageLoader.loadImage("/Lel.png");
+		img1 = ImageLoader.loadImage("/nebula.png");
+		img2 = ImageLoader.loadImage("/nebula.png");
 		y2 = -Handler.getHeight();
+		
 	}
 	
 	public void tick() {

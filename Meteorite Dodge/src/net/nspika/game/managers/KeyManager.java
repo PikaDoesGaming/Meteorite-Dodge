@@ -2,8 +2,10 @@ package net.nspika.game.managers;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import net.nspika.game.Handler;
+import net.nspika.game.utils.InputField;
 
 public class KeyManager implements KeyListener {
 
@@ -11,6 +13,8 @@ public class KeyManager implements KeyListener {
 	public static boolean up, down, left, right, space;
 
 	private Handler handler;
+	
+	private ArrayList<InputField> activeInputFields = new ArrayList<>();
 
 	public KeyManager(Handler handler) {
 		this.handler = handler;
@@ -42,7 +46,9 @@ public class KeyManager implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-
+		for(InputField inputField : activeInputFields) {
+			inputField.onKeyTyped(e);
+		}
 	}
 
 	public boolean isKeyPressed(int id) {
@@ -51,6 +57,16 @@ public class KeyManager implements KeyListener {
 
 	public boolean[] getKeys() {
 		return keys;
+	}
+	
+	public void addActiveInputField(InputField input) {
+		if(!activeInputFields.contains(input)) {
+			activeInputFields.add(input);
+		}
+	}
+	
+	public void removeActiveInputFields(InputField input) {
+		activeInputFields.remove(input);
 	}
 
 }

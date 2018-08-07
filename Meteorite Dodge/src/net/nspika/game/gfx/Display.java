@@ -7,14 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public class Display {
-	
+
 	public static int tickcount = 0;
 	private static JFrame frame;
 	private Canvas canvas;
 
 	private String title;
 	private int width, height;
-	
+
 	public Display(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -23,11 +23,11 @@ public class Display {
 		frame = new JFrame(title);
 		createDisplay();
 	}
-	
+
 	public void tick(int frames, int ticks) {
-		frame.setTitle(title + " " + "FPS: " + frames + " " + "Ticks: " + ticks);
+		frame.setTitle(title + " FPS: " + frames + " | " + "Ticks: " + ticks);
 	}
-	
+
 	private void createDisplay() {
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -39,12 +39,12 @@ public class Display {
 		canvas.setPreferredSize(new Dimension(width, height));
 		canvas.setMaximumSize(new Dimension(width, height));
 		canvas.setMinimumSize(new Dimension(width, height));
-		canvas.setFocusable(false);
 
 		frame.add(canvas);
 		frame.pack();
+		canvas.requestFocus();
 	}
-	
+
 	public Canvas getCanvas() {
 		return canvas;
 	}

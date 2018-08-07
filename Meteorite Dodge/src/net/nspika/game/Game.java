@@ -6,9 +6,12 @@ import java.awt.image.BufferStrategy;
 import net.nspika.game.gfx.Display;
 import net.nspika.game.managers.KeyManager;
 import net.nspika.game.managers.MouseManager;
+import net.nspika.game.states.DeathState;
 import net.nspika.game.states.GameState;
+import net.nspika.game.states.MenuState;
 import net.nspika.game.states.State;
 import net.nspika.game.utils.Background;
+import net.nspika.game.utils.Fonts;
 
 
 public class Game implements Runnable{
@@ -24,7 +27,9 @@ public class Game implements Runnable{
     private Display display;
     private Handler handler;
     private KeyManager keyManager;
-    private GameState gameState;
+    public State gameState;
+    public State deathState;
+    public State menuState;
     private MouseManager mouseManager;
     
     public Game(String title, int width, int height) {
@@ -34,15 +39,19 @@ public class Game implements Runnable{
     }
     
     public void init() {
+    	Fonts.init();
     	handler = new Handler(this);
     	keyManager = new KeyManager(handler);
+    	mouseManager = new MouseManager();
         display = new Display(title, width, height);
-        display.getFrame().addKeyListener(keyManager);
+        display.getCanvas().addKeyListener(keyManager);
         display.getCanvas().addMouseListener(mouseManager);
         display.getCanvas().addMouseMotionListener(mouseManager);
         
         gameState = new GameState(handler);
-        State.setState(gameState);
+        menuState = new MenuState(handler, keyManager);
+        deathState = new DeathState(handler);
+        State.setState(menuState);
     }
     
 	@Override
@@ -101,9 +110,9 @@ public class Game implements Runnable{
 	}
 	
 	public void tick() {
-		keyManager.tick();
 		State.getState().tick();
-		
+		keyManager.tick();
+		MouseManager.tick();
 	}
 	
 	public void render() {
@@ -125,5 +134,6 @@ public class Game implements Runnable{
         g.dispose();
 
 	}
+	
 
 }

@@ -12,6 +12,7 @@ public class Meteorite {
 	private int size;
 	private float vy;
 	private Handler handler;
+	private int nmbr;
 
 	public Meteorite(Handler handler, float x, float y, int speed, int size) {
 		this.handler = handler;
@@ -24,13 +25,17 @@ public class Meteorite {
 	
 	public void tick() {
 		y += vy;
+		
+		nmbr++;
+		
+		if (nmbr > 1000) {
+			nmbr = 0;
+		}
 	}
 
 	public void render(Graphics g) {
-		
 		g.setColor(Color.ORANGE);
 		g.fillRect(((int) x), ((int) y), width, height);
-		
 	}
 
 	public int getWidth() {
