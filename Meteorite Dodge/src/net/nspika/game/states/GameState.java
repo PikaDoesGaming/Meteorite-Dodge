@@ -183,7 +183,7 @@ public class GameState extends State {
 		
 		if (ammo == 1) {
 			g.setColor(Color.RED);
-			Fonts.drawCenteredText(g, "Empty", 40, 220, Fonts.playerNameFont);
+			Fonts.drawCenteredText(g, "Empty", 42, 220, Fonts.playerNameFont);
 		}
 		
 		g.setColor(Color.RED);
