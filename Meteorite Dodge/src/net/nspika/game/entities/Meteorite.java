@@ -1,10 +1,12 @@
 package net.nspika.game.entities;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import net.nspika.game.Handler;
+import net.nspika.game.utils.ImageLoader;
 
 public class Meteorite {
 	private float x, y;
@@ -23,6 +25,7 @@ public class Meteorite {
 		this.x = x;
 	}
 	
+	
 	public void tick() {
 		y += vy;
 		
@@ -34,6 +37,7 @@ public class Meteorite {
 	}
 
 	public void render(Graphics g) {
+		//g.drawImage(ImageLoader.scale(ImageLoader.loadImage("/pp.png"), width, height), (int)x, (int)y, null);
 		g.setColor(Color.ORANGE);
 		g.fillRect(((int) x), ((int) y), width, height);
 	}

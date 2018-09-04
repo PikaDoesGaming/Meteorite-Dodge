@@ -59,6 +59,7 @@ public class MenuState extends State {
 		Fonts.drawTitle(g, "Meteorite", Color.RED, Fonts.titleFont, 50, true);
 		Fonts.drawTitle(g, "Dodge", Color.RED, Fonts.titleFont, 115, true);
 		startGameButton.render(g);
+		g.setColor(Color.white);
 		nameField.render(g);
 	}
 

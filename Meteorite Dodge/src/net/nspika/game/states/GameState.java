@@ -12,7 +12,9 @@ import net.nspika.game.entities.Player;
 import net.nspika.game.utils.Background;
 import net.nspika.game.utils.Button;
 import net.nspika.game.utils.CollisionDetection;
+import net.nspika.game.utils.Files;
 import net.nspika.game.utils.Fonts;
+import net.nspika.game.utils.PauseButton;
 
 public class GameState extends State {
 
@@ -31,14 +33,13 @@ public class GameState extends State {
 	private int score = 0;
 
 	private boolean shipHitted = false;
-	private boolean paused = false;
+	private static boolean paused = false;
 	private int ammo;
-	
-	private Button gameMenuButton;
-	private static final int gameMenuButtonYOffset = 20;
-	private static final int gameMenuButtonWidth = 50;
-	private static final int gameMenuButtonHeight = 50;
-	
+
+	private PauseButton pauseButton;
+
+	private static boolean restart = false;
+
 	private char gear;
 
 	public GameState(Handler handler) {
@@ -49,60 +50,70 @@ public class GameState extends State {
 		bullets = new ArrayList<Bullet>();
 		meteors = new ArrayList<Meteorite>();
 		random = new Random();
-		ammo = 5;
+		ammo = 4;
 		
-		gear = '\u2699';
-		gameMenuButton = new Button(Handler.getWidth() - 70, gameMenuButtonYOffset, gameMenuButtonWidth, gameMenuButtonHeight, 15, 15);
-		gameMenuButton.setColor(Color.ORANGE);
-		gameMenuButton.setFont(Fonts.playButtonFont);
-		gameMenuButton.setText(String.valueOf(gear));
-		gameMenuButton.setTextColor(Color.BLACK);
+		pauseButton = new PauseButton(handler);
 	}
 
 	@Override
 	public void tick() {
-		gameMenuButton.tick();
-		
+
+		if (restart) {
+			player.setHP(3);
+			player.setX(Handler.getWidth() - (Handler.getWidth() + player.getWidth()) / 2);
+			player.setY(Handler.getHeight() - Handler.getWidth() / 5);
+			ammo = 4;
+			score = 0;
+
+			meteors.clear();
+			bullets.clear();
+
+			restart = false;
+		}
+
+		pauseButton.tick();
 		counter++;
-		
-		if (gameMenuButton.isClicked() && paused == false && counter > 5) {
+
+		if (pauseButton.getButton().isClicked() && paused == false && counter > 5) {
 			paused = true;
 			counter = 0;
 		}
-		
-		if (gameMenuButton.isClicked() && paused == true && counter > 5) {
+
+		if (pauseButton.getButton().isClicked() && paused == true && counter > 5) {
 			paused = false;
 			counter = 0;
 		}
-		
+
 		if (player.getAlive() && paused == false) {
 
 			player.tick();
-			
+
 			background.tick();
 			secs++;
 			secs2++;
 			secs3++;
-			
+
 			if (Handler.getKeyManager().space) {
 				if (shootable && ammo > 1) {
 					generateBullet();
 					shootable = false;
 				}
 			}
-			
+
 			for (int i = 0; i < bullets.size(); i++) {
 				bullets.get(i).tick();
 				if (bullets.get(i).getY() + bullets.get(i).getHeight() < 0) {
 					bullets.remove(i);
 				}
 			}
-			
+
 			for (int i = 0; i < meteors.size(); i++) {
-				for(int j = 0; j < bullets.size(); j++) {
-					if(CollisionDetection.testMeteoriteBulletCollision(meteors.get(i), bullets.get(j))){
+				for (int j = 0; j < bullets.size(); j++) {
+					if (CollisionDetection.testMeteoriteBulletCollision(meteors.get(i), bullets.get(j))) {
 						meteors.remove(i);
 						bullets.remove(j);
+						score++;
+						break;
 					}
 				}
 			}
@@ -114,7 +125,7 @@ public class GameState extends State {
 					score++;
 				}
 			}
-			
+
 			for (int i = 0; i < meteors.size(); i++) {
 				if (CollisionDetection.testMeteoriteShipCollision(meteors.get(i), player)) {
 					meteors.remove(i);
@@ -136,24 +147,24 @@ public class GameState extends State {
 				player.reduceHP(1);
 				shipHitted = false;
 			}
-			
+
 			if (secs2 - 20 >= 0) {
 				generateMetoer();
 				secs2 = 0;
 			}
 		}
-		
+
 		if (player.getHP() == 0) {
+			Files.writeNumber("Highscores.txt", score);
 			State.setState(Handler.getGame().deathState);
 		}
 	}
 
 	@Override
 	public void render(Graphics g) {
-		
+
 		background.render(g);
 		player.render(g);
-		gameMenuButton.render(g);
 
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).render(g);
@@ -165,8 +176,7 @@ public class GameState extends State {
 
 		g.setColor(Color.WHITE);
 		Fonts.drawLeftAllinedText(g, "Ammo", 10, 200, Fonts.playerNameFont);
-		
-		
+
 		for (int i = 0; i < player.getHP(); i++) {
 			g.setColor(Color.ORANGE);
 			g.fillRect(9 + 80 * i, 29, 72, 72);
@@ -180,14 +190,16 @@ public class GameState extends State {
 			g.setColor(Color.BLACK);
 			g.fillRect(18, 201 + 20 * i, 40, 10);
 		}
-		
+
 		if (ammo == 1) {
 			g.setColor(Color.RED);
 			Fonts.drawCenteredText(g, "Empty", 42, 220, Fonts.playerNameFont);
 		}
-		
+
 		g.setColor(Color.RED);
-		Fonts.drawCenteredText(g, Integer.toString(score), Handler.getWidth()/2, Handler.getHeight()/8, Fonts.scoreFont);
+		Fonts.drawCenteredText(g, Integer.toString(score), Handler.getWidth() / 2, Handler.getHeight() / 8,
+				Fonts.scoreFont);
+		pauseButton.render(g);
 	}
 
 	private void generateBullet() {
@@ -203,4 +215,16 @@ public class GameState extends State {
 		meteors.add(new Meteorite(handler, randX, 0, randSpeed, randSize));
 	}
 
+	public static void restart() {
+		restart = true;
+	}
+
+	public int getScore() {
+		return score;
+	}
+	
+	public static boolean displayMenu() {
+		return paused;
+	}
+	
 }

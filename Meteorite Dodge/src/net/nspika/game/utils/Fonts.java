@@ -46,32 +46,21 @@ public class Fonts {
 			System.out.println("Font is null");
 		}
 		
-		//playerNameFont = new Font("Arial", Font.PLAIN, 25);
 		playerNameFont = baseFont.deriveFont(Font.PLAIN, 25);
-		//scoreFont = new Font("Arial", Font.BOLD, 45);
 		scoreFont = baseFont.deriveFont(Font.BOLD, 45);
 		killFeedFontArial = new Font("Arial", Font.PLAIN, 30);
 		killFeedFont = baseFont.deriveFont(Font.PLAIN, 30);
-		
-		//lobbyTeamNameFont = new Font("Arial", Font.BOLD, 45);
 		lobbyTeamNameFont = baseFont.deriveFont(Font.BOLD, 45);
-		//lobbyNameFont = new Font("Arial", Font.PLAIN, 30);
 		lobbyNameFont = baseFont.deriveFont(Font.PLAIN, 30);
 		buttonFont = new Font("Arial", Font.PLAIN, 30);
 		playButtonFont = new Font("Arial", Font.BOLD, 50);
 		inputFieldFont = new Font("", Font.ITALIC, 40);
-		//titleFont = new Font("", Font.BOLD, 75);
 		titleFont = baseFont.deriveFont(Font.BOLD, 75);
-		//winScreenWinner = new Font("", Font.BOLD, 60);
 		winScreenWinner = baseFont.deriveFont(Font.BOLD, 60);
 		errorFont = new Font("Arial", Font.ITALIC, 20);
-		//respawnTimerFont = new Font("Arial", Font.BOLD, 70);
 		respawnTimerFont = baseFont.deriveFont(Font.BOLD, 70);
-		//notificationFont = new Font("Arial", Font.BOLD, 40);
 		notificationFont = baseFont.deriveFont(Font.PLAIN, 40);
-		//winScreenNameFont = new Font("", Font.BOLD, 55);
 		winScreenNameFont = baseFont.deriveFont(Font.BOLD, 55);
-		//tabStatsFont = new Font("", Font.ITALIC, 35);
 		tabStatsFont = baseFont.deriveFont(Font.ITALIC, 35);
 	}
 	

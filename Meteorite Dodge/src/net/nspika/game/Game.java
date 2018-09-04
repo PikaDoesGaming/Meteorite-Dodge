@@ -8,6 +8,7 @@ import net.nspika.game.managers.KeyManager;
 import net.nspika.game.managers.MouseManager;
 import net.nspika.game.states.DeathState;
 import net.nspika.game.states.GameState;
+import net.nspika.game.states.HighScoreState;
 import net.nspika.game.states.MenuState;
 import net.nspika.game.states.State;
 import net.nspika.game.utils.Background;
@@ -30,6 +31,7 @@ public class Game implements Runnable{
     public State gameState;
     public State deathState;
     public State menuState;
+    public State highScoreState;
     private MouseManager mouseManager;
     
     public Game(String title, int width, int height) {
@@ -51,6 +53,7 @@ public class Game implements Runnable{
         gameState = new GameState(handler);
         menuState = new MenuState(handler, keyManager);
         deathState = new DeathState(handler);
+        highScoreState = new HighScoreState(handler);
         State.setState(menuState);
     }
     
